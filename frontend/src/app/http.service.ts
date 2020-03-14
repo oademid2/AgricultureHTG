@@ -14,5 +14,7 @@ export class HttpService {
   getBeer() {
      return this.http.get("https://api.openweathermap.org/data/2.5/weather?id=184745&appid=20ddd21d29e527ae53e31ee05ea272f6")
   }
+
+  
 }
 

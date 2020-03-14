@@ -64,6 +64,8 @@ export class Tab1Page implements OnInit{
   ngOnInit(): void {
 
     setTimeout(() => this.testThis(), 3000)
+
+    setTimeout(() => this.getPrice(), 5000)
  
   }
 
@@ -90,6 +92,7 @@ export class Tab1Page implements OnInit{
   
   }
 
+  
 }
 
 
