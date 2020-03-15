@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 3
+      Marketplace
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -14,4 +14,47 @@
   </ion-header>
 
   <app-explore-container name="Tab 3 page"></app-explore-container>
+  <ion-card *ngFor ="let sale of sellingListNames">
+    <div style="float:left">
+    <ion-card-header>
+      <ion-card-subtitle>Nairobi</ion-card-subtitle>
+      <ion-card-title>{{sellingList[sale].crop}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Volume: {{sellingList[sale].volume}}kg</p>
+      <p>Price: {{sellingList[sale].price}}/kg</p>
+    </ion-card-content>
+  </div>
+  <div >
+    <ion-button color="light" *ngIf="!sellingList[sale].offer && !sellingList[sale].sold" style="margin-top:50px;margin-left:70px;width:140px;text-align: center;color:white">NO OFFER</ion-button>
+    <ion-button  *ngIf="sellingList[sale].offer && !sellingList[sale].sold" (click)="openmodal(sellingList[sale].crop)"style="margin-top:50px;margin-left:70px;width:140px;text-align: center;background-color: green;color:white">VIEW OFFER</ion-button>
+    <ion-button color="secondary" *ngIf="sellingList[sale].offer && sellingList[sale].sold"style="margin-top:50px;margin-left:70px;width:140px;text-align: center;background-color: green;color:white">SOLD</ion-button>
+
+
+  </div>
+  </ion-card>
+  <ion-button (click)="simulate()">simulate offer</ion-button>
+
+  <div id="myModal" class="modal">
+
+    <!-- Modal content -->
+   <div class="modal-content">
+
+
+        <span (click)="closemodal()" class="close">&times;</span>
+        <p>Name: {{currentOffer.seller}}</p>
+        <p>Rating: {{currentOffer.rating}}</p>
+        <p>Location: {{currentOffer.location}}</p>
+        <p>Details: {{currentOffer.details}}</p>
+        <ion-button expand="block" (click)="acceptOffer(currentOffer.crop)">ACCEPT</ion-button>
+        <ion-button expand="block" (click)="declineOffer()">DECLINE</ion-button>
+        
+
+  </div>
+
+  
+  </div>
+
+  
+ 
 </ion-content>

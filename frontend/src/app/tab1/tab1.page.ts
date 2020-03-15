@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { ViewChild, ElementRef } from '@angular/core';
 import { HttpService } from '../http.service';
-import { ChildActivationStart } from '@angular/router';
-import { NumericValueAccessor } from '@ionic/angular';
+import { DataService } from "../data.service";
 
 class Crop{
   
@@ -30,52 +29,74 @@ class Crop{
 
 export class Tab1Page implements OnInit{
 
+  NewSale ={
+    "crop": null,
+    "price": null,
+    "volume": null,
+    "offer": false,
+    "sold": false
+  }
 
   private myCrops: any = ["wheat", "corn","rice"];
   private allCrops: any = ["wheat", "corn","rice"]
- /* private myCropData: any = {
-    wheat: new Crop("wheat", 5, "assets/wheat.jpg"),
-    rice: new Crop("rice", 17, "assets/wheat.jpg"),
-    corn: new Crop("corn", 2, "assets/wheat.jpg")
-  };*/
-  private myCropData: any = [
-      {
+
+  cropDB: any = 
+      {"wheat":{
         "name": "wheat",
-        "delta": 5
-      },
-      {
+        "delta": 20
+        }
+      ,
+       "rice":{
         "name": "rice",
         "delta": 5
-      },
-      {
+      }
+      ,
+      "corn":{
         "name": "corn",
         "delta": 5
-      },
-    ]
+      }
+    }
+
   
+
+
+
+
   
   private canv: HTMLCanvasElement[] = []
   private ct: CanvasRenderingContext2D[] = [];// = this.canv[0].getContext('2d');'
 
   
-  constructor(private _http: HttpService) {}
+  constructor(private _http: HttpService, private _data: DataService) {}
   
 
   ngOnInit(): void {
 
-    setTimeout(() => this.testThis(), 3000)
+    setTimeout(() => this.showMetricBar(), 500)
+    this.initMetrics(); 
 
-    setTimeout(() => this.getPrice(), 5000)
- 
+    
+    
   }
 
-  testThis(){
+  initMetrics(){
+    for(let i in this.myCrops){
+    let crop = this.myCrops[i]
+    this._http.getPrices(crop).subscribe(data => {
+      this.cropDB[crop] = data;
+      console.log(data);
+    })
+
+  }
+
+
+  }
+
+  showMetricBar(){
     
     for(let i=0;i<this.myCrops.length;i++){
-      //
 
       var crop = this.myCrops[i]
-
       this.canv.push(document.getElementById(crop+"-metric-bar") as HTMLCanvasElement);
       this.ct.push(this.canv[i].getContext('2d'));
 
@@ -87,13 +108,70 @@ export class Tab1Page implements OnInit{
 
       this.ct[i].fillStyle = "black";
       this.ct[i].fillRect(150, 0, 20, 40);
-  
+
     }
-  
+
+   
   }
 
+openSellModal (crop) {
+  let modal = document.getElementById("SellModal") as HTMLElement;
+  modal.style.display = "block";
+  this.NewSale["crop"]  = crop;
+  console.log(crop)
+}
+
+// When the user clicks on <span> (x), close the modal
+closeSellModal() {
+  let modal = document.getElementById("SellModal") as HTMLElement;
+  modal.style.display = "none";
+}
+
+addSale() {
+  console.log(this.NewSale);
+  this.closeSellModal()
+
+  this._data.changeSelling(this.NewSale);
+
+
+}
+
+
+
+
+
+
+
+
+
+
+  
   
 }
+
+
+
+
+
+
+/*
+
+  private myCropData: any = [
+    {
+      "name": "wheat",
+      "delta": 20
+    },
+    {
+      "name": "rice",
+      "delta": 5
+    },
+    {
+      "name": "corn",
+      "delta": 5
+    },
+  ]
+
+*/
 
 
 

@@ -9,13 +9,13 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Weather</ion-title>
+      <ion-title size="large">Outlook</ion-title>
     </ion-toolbar>
   </ion-header>
 
   
   <ion-card-header>
-    <ion-card-subtitle>Friday, March, 13th, 2020</ion-card-subtitle>
+    <ion-card-subtitle>Sunday, March, 15th, 2020</ion-card-subtitle>
     <div>
     <ion-card-title>Today's Forecast <span style="bottom:0px;padding-left:20px;position:absolute; font-size: 12px;color:green">Good Farming</span></ion-card-title>
   </div>
@@ -30,8 +30,8 @@
       <ion-col>
         <p>Weather: {{currentWeather.weather}}</p>
         <p>Temperature:{{currentWeather.temp}} </p>
-        <p>Humidity:{{currentWeather.percipitation}} </p>
-        <p>Soil Moisture: {{currentWeather.Soil}}</p>
+        <p>Humidity:{{currentWeather.humidity}} </p>
+        <p>Soil Moisture: {{currentWeather.soil}}</p>
       </ion-col>
      
     </ion-row>
@@ -67,36 +67,19 @@
 
     
 
+
     <ion-row>
       <ion-col>
         1 Day
       </ion-col>
       <ion-col>
-        Temp
+        {{forecast[0].temp}}
       </ion-col>
       <ion-col>
-        Huimidity
+        {{forecast[0].humidity}}
       </ion-col>
       <ion-col>
-        Soil
-      </ion-col>
-      <ion-col>
-        <span style="color:blue">okay</span>
-      </ion-col>
-     
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        5 days
-      </ion-col>
-      <ion-col>
-        Temp
-      </ion-col>
-      <ion-col>
-        Huimidity
-      </ion-col>
-      <ion-col>
-        Soil
+        {{forecast[0].soil}}
       </ion-col>
       <ion-col>
         <span style="color:blue">okay</span>
@@ -106,43 +89,57 @@
 
     <ion-row>
       <ion-col>
-        2 Weeks
+        5 Days
       </ion-col>
       <ion-col>
-        Temp
+        {{forecast[1].temp}}
       </ion-col>
       <ion-col>
-        Huimidity
+        {{forecast[1].humidity}}
       </ion-col>
       <ion-col>
-        Soil
+        {{forecast[1].soil}}
       </ion-col>
       <ion-col>
-        <span style="color:red">poor</span>
+        <span style="color:blue">okay</span>
       </ion-col>
      
     </ion-row>
 
     <ion-row>
       <ion-col>
-        30 days
+        2 weeks
       </ion-col>
       <ion-col>
-        Temp
+        {{forecast[2].temp}}
       </ion-col>
       <ion-col>
-        Huimidity
+        {{forecast[2].humidity}}
       </ion-col>
       <ion-col>
-        Soil
+        {{forecast[2].soil}}
       </ion-col>
       <ion-col>
-        <span style="color:red">poor</span>
+        <span style="color:blue">okay</span>
       </ion-col>
      
     </ion-row>
     
   </ion-grid>
+
+   
+  <ion-card-header>
+    
+    <div>
+    <ion-card-title>NEWS ALERTS </ion-card-title>
+  </div>
+  </ion-card-header>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>poor farming conditions</ion-card-title>
+      <ion-card-subtitle>EMBARGO IN SUDAN</ion-card-subtitle>
+    </ion-card-header>
+    </ion-card>
 
 
   <app-explore-container name="Tab 2 page"></app-explore-container>

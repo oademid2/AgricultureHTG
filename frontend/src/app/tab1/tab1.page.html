@@ -14,28 +14,58 @@
   </ion-header>
 
   <app-explore-container name="Tab 1 page"></app-explore-container>
-  <ion-card  class = "crop-card" *ngFor="let crop of myCropData">
+  <ion-card  class = "crop-card" *ngFor="let crop of myCrops">
     <ion-card-header>
-      <ion-card-title>{{crop.name}} <span class="crop-card-metric">{{crop.delta}}%</span></ion-card-title>
+      <ion-card-title>{{cropDB[crop].name}} <span class="crop-card-metric">{{cropDB[crop].delta}}%</span></ion-card-title>
       <br>
-      <img class = "crop-card-img" src="assets/{{crop.name}}.jpg" />
+      <img class = "crop-card-img" src="assets/{{crop}}.jpg" />
     </ion-card-header>
 
     <ion-card-content>
-      <canvas id = "{{crop.name}}-metric-bar" class = "{{crop.name}}-metric-bar"></canvas>
+      <canvas id = "{{crop}}-metric-bar" class = "{{crop}}-metric-bar"></canvas>
+
+      <ion-card-subtitle>Future Outlook</ion-card-subtitle>
+      <div style="float:left">
+        <p>2 months: {{cropDB[crop].delta_2m}}%</p>
+        <p>6 months: {{cropDB[crop].delta_6m}}%</p>
+        <p>12 months: {{cropDB[crop].delta_12m}}%</p>
+      </div>
+      <div >
+       
+        <div (click)="openSellModal(crop)" style="margin-left:200px;padding-top: 5px;padding-bottom: 5px;">
+          <ion-button (click)="openSellModal(crop)" style="width:140px;text-align: center;background-color: green;color:white">SELL</ion-button>
+           
+        </div>
+      </div>
+
+      
+        
     </ion-card-content>
+
+
 
   </ion-card>
 
 
-        <!-- fab placed to the bottom end -->
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button>
-      <ion-icon (click)="testThis()" name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+ 
 
-  
+  <!-- The Modal -->
+<div id="SellModal" class="modal_t1">
+
+  <!-- Modal content -->
+  <div class="modal-content-t1">
+    <span (click)="closeSellModal()" class="close">&times;</span>
+    <p>How many kg do you want to sell?</p>
+    <!-- Number type input -->
+    <ion-input style="background-color: lightgrey" type="number" [(ngModel)]="NewSale['volume']"></ion-input>
+    <p>At what price?</p>
+    <ion-input style="background-color: lightgrey" type="number" [(ngModel)]="NewSale['price']"></ion-input>
+    <br>
+    <ion-button expand="block" (click)="addSale()">POST FOR SALE</ion-button>
+  </div>
+
+</div>
+
 
 
 

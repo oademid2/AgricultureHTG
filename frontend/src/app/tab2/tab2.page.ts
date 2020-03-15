@@ -1,18 +1,19 @@
 import { Component } from '@angular/core';
 import { HttpService } from '../http.service';
+import { DataService } from "../data.service";
 
 class Weather{
   temp: number;
   weather: number;
-  percipitation: number;
-  Soil: string;
+  humidity: number;
+  soil: string;
 
-  constructor(w,t,p,s){
+  constructor(w,t,h,s){
 
     this.temp = Number((Math.round((t-273) * 100) / 100).toFixed(2));
     this.weather = w;
-    this.percipitation = p;
-    this.Soil = s;
+    this.humidity = h;
+    this.soil = "moist";
   }
 }
 
@@ -66,15 +67,35 @@ export class Tab2Page {
     "cod": 200
 }
 
-currentWeather:any;
+currentWeather:any = new Weather(0,0,0,0);
+forecast: any = [new Weather(0,0,0,0),new Weather(0,0,0,0),new Weather(0,0,0,0),new Weather(0,0,0,0)];
   
 
 constructor(private _http: HttpService) {}
 
 ngOnInit(): void {
 
- this.currentWeather = new Weather(this.test.weather[0].main, this.test.main.temp, this.test.main.pressure, this.test.main.humidity);
- console.log(this.currentWeather)
+ //this.currentWeather = new Weather(this.test.weather[0].main, this.test.main.temp, this.test.main.pressure, this.test.main.humidity);
+ this._http.getWeather().subscribe((res)=>{
+   console.log('x', res["weather"][0])
+  
+  this.currentWeather = new Weather(res["weather"][0]["main"], res["main"].temp, res["main"].pressure, res["main"].humidity);
+  console.log(this.currentWeather)
+  
+ })
+
+ this._http.getForecast().subscribe((resp)=>{
+  console.log(resp)
+
+  let res;
+  for(let i = 0;i<4;i++){
+    res = resp["list"][i]
+    this.forecast[i]=  new Weather(res["weather"][0]["main"], res["main"].temp, res["main"].pressure, res["main"].humidity);
+  }
+})
+
+ 
+ 
 
 }
 
